@@ -2,19 +2,24 @@ import React, { useContext } from "react";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from "./firebase.config";
+import { UserContext } from "../../App";
 
 const Login = () => {
-  const handleGoogleSignIn = () => {
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
+  }
+
+  const handleGoogleSignIn = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
 
     firebase
       .auth()
       .signInWithPopup(provider)
       .then(function (result) {
-        var token = result.credential.accessToken;
-        var user = result.user;
-        console.log(user);
+        const { displayName, email } = result.user;
+        const signedInUser = { name: displayName, email };
+        setLoggedInUser(signedInUser);
       })
       .catch(function (error) {
         var errorCode = error.code;
