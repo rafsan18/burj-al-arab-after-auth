@@ -9,6 +9,7 @@ import {
 } from "@material-ui/pickers";
 import "date-fns";
 import Button from "@material-ui/core/Button";
+import Bookings from "../Bookings/Bookings";
 
 const Book = () => {
     const { bedType } = useParams();
@@ -88,6 +89,7 @@ const Book = () => {
                     Book Now
                 </Button>
             </MuiPickersUtilsProvider>
+            <Bookings></Bookings>
         </div>
     );
 };
